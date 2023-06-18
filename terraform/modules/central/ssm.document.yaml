@@ -1,0 +1,43 @@
+---
+schemaVersion: '2.2'
+description: |
+  Wrapper used to:
+
+  - download the actual binary
+  - execute it
+parameters:
+  S3Bucket:
+    type: String
+    description: S3 bucket name
+    default: ${s3_bucket}
+
+  Name:
+    type: String
+    description: Binary name
+  Version:
+    type: String
+    description: Binary version
+  Checksum:
+    type: String
+    description: Binary version SHA256 checksum
+    default: none
+
+mainSteps:
+- action: aws:runShellScript
+  name: RunWrapper
+  precondition:
+    StringEquals:
+    - platformType
+    - Linux
+  inputs:
+    runCommand:
+    - |
+      #!/usr/bin/env bash
+      set -eu -o pipefail
+
+      export S3_BUCKET={{ S3Bucket }}
+      export S3_OBJECT={{ Name }}/{{ Version }}
+      # provided by SSM Run Command
+      export AWS_REGION="$${REGION}"
+
+      ${indent(6, script)}
