@@ -1,0 +1,16 @@
+---
+
+users:
+-
+  state: present # absent
+
+  uid:
+  name:
+  comment:
+  create_home: true
+  home:
+  shell:
+  group:
+  groups:
+
+  non_unique: false
