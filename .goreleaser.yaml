@@ -2,6 +2,9 @@
 
 project_name: assmble
 
+release:
+  disable: true
+
 before:
   hooks:
     # You may remove this if you don't use go modules.
@@ -24,6 +27,9 @@ builds:
       - amd64
       # - arm
       # - arm64
+
+archives:
+- format: binary
 
 blobs:
   - provider: s3
